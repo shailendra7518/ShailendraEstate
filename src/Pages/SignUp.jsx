@@ -1,8 +1,10 @@
 
 import { useState } from "react";
-import env from "react-dotenv";
+ const apiUrl = import.meta.env.VITE_BASE_URL;
 import { Link, useNavigate } from "react-router-dom";
 function SignUp() {
+ 
+
   const [formData, setformData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false)
@@ -16,7 +18,7 @@ function SignUp() {
     try {
        setLoading(true);
 
-       const res = await fetch(`http://localhost:3000/api/auth/signup`, {
+       const res = await fetch(`${apiUrl}/api/auth/signup`, {
          method: "POST",
          headers: {
            "Content-Type": "application/json",
