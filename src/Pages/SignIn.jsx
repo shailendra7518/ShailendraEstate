@@ -23,10 +23,11 @@ console.log(formData)
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-
+       
       setError(data);
       setLoading(false);
       if (data.status == 201) {
+      
         Navigate("/");
       }
 
