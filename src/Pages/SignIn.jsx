@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 const apiUrl = import.meta.env.VITE_BASE_URL;
 import { Link, useNavigate } from "react-router-dom";
 import {signInStart,signInSuccess,signInFailure} from '../Redux/User/userSlice'
+import OAuth from "../Components/oauth";
+
 
 function SignIn() {
   const [formData, setformData] = useState({});
@@ -14,7 +16,7 @@ function SignIn() {
   };
   console.log(formData)
   
-  
+  console.log(error)
   const handleSubmit = async (e) => {
     // prevent default feature
     e.preventDefault();
@@ -37,7 +39,7 @@ function SignIn() {
       // check if status code 201 then its successfully loged in
       if (data.status == 201) {
          dispatch(signInSuccess(data))
-        // Navigate("/");
+        Navigate("/");
       } else {
         dispatch(signInFailure(data))
       }
@@ -72,6 +74,9 @@ function SignIn() {
         >
           {loading ? "Loading..." : "Sign In"}
         </button>
+
+       <OAuth/>
+
       </form>
       <div className="flex gap-2 mt-5">
         {" "}
