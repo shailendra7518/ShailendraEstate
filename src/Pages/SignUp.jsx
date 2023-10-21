@@ -2,6 +2,8 @@
 import { useState } from "react";
  const apiUrl = import.meta.env.VITE_BASE_URL;
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../Components/oauth";
+ 
 function SignUp() {
  
 
@@ -73,9 +75,11 @@ function SignUp() {
         />
         <button
           disabled={loading}
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-          {loading ? 'Loading...':"Sign Up"}
+          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+        >
+          {loading ? "Loading..." : "Sign Up"}
         </button>
+        <OAuth />
       </form>
       <div className="flex gap-2 mt-5">
         {" "}
@@ -84,7 +88,11 @@ function SignUp() {
           <span className="text-blue-700">Sign in</span>
         </Link>
       </div>
-      {error && <p className={error.status==200 ? "text-green-700":"text-red-700"}>{ error.message}</p>}
+      {error && (
+        <p className={error.status == 200 ? "text-green-700" : "text-red-700"}>
+          {error.message}
+        </p>
+      )}
     </div>
   );
 }
