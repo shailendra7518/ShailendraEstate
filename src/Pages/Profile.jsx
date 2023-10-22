@@ -15,6 +15,7 @@ import {
   deleteUserStart,
   deleteUserFailure,
   deleteUserSuccess,
+  logoutUserSuccess,
 } from "../Redux/User/userSlice";
 
 function Profile() {
@@ -92,6 +93,11 @@ function Profile() {
 }
 
   };
+
+  // handleLogout to logout user
+  const handleLogout = () => {
+      dispatch(logoutUserSuccess("user delete successfull"))
+  }
 
   // console.log(file)
   console.log("formdata", formData);
@@ -188,7 +194,9 @@ function Profile() {
         <span onClick={handleDelete} className="text-red-700 cursor-pointer">
           Delete Account
         </span>
-        <span className="text-red-700 cursor-pointer">Sign out</span>
+        <span
+          onClick={handleLogout}
+          className="text-red-700 cursor-pointer">Sign out</span>
       </div>
       <p className="text-green-700">
         {updateSuccess ? "updated successfully" : ""}
