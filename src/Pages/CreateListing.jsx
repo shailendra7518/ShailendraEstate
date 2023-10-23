@@ -10,13 +10,13 @@ import { app } from "../firebase";
 function CreateListing() {
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({ imageUrls: [] });
-    const [imageUploadError, setImageUploadError] = useState(false);
-    const [uploading, setUploading] = useState(false);
+  const [imageUploadError, setImageUploadError] = useState(false);
+  const [uploading, setUploading] = useState(false);
   console.log("formData", formData);
   const handleImageSubmit = (e) => {
-      if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
-          setUploading(true);
-          setImageUploadError(false)
+    if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
+      setUploading(true);
+      setImageUploadError(false);
       const promises = [];
       for (let i = 0; i < files.length; i++) {
         promises.push(storeImage(files[i]));
@@ -27,16 +27,16 @@ function CreateListing() {
             ...formData,
             imageUrls: formData.imageUrls.concat(urls),
           });
-            setImageUploadError(false);
-            setUploading(false)
+          setImageUploadError(false);
+          setUploading(false);
         })
         .catch((err) => {
-            setImageUploadError("Image upload failed");
-            setUploading(false)
+          setImageUploadError("Image upload failed");
+          setUploading(false);
         });
     } else {
-          setImageUploadError("you can only upload 6 image per listing");
-          setUploading(false)
+      setImageUploadError("you can only upload 6 image per listing");
+      setUploading(false);
     }
   };
 
@@ -203,13 +203,12 @@ function CreateListing() {
               multiple
             />
             <button
-            disabled={uploading}
+              disabled={uploading}
               type="button"
               onClick={handleImageSubmit}
               className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
-                      >
-                          {uploading ? "Uploading...":"Upload"}
-              
+            >
+              {uploading ? "Uploading..." : "Upload"}
             </button>
           </div>
 
@@ -224,12 +223,11 @@ function CreateListing() {
               >
                 <img
                   className="w-20 h-20 object-contain rounded-lg"
-                  
                   src={url}
                   alt="listing image"
                 />
                 <button
-                  onClick={()=>handleRemoveImage(i)}
+                  onClick={() => handleRemoveImage(i)}
                   type="button"
                   className="text-red-700 rounded-lg 
                     uppercase hover:opacity-75"
