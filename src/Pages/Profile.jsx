@@ -17,7 +17,7 @@ import {
   deleteUserSuccess,
   logoutUserSuccess,
 } from "../Redux/User/userSlice";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -160,6 +160,33 @@ function Profile() {
       setShowListingError(true);
     }
   };
+
+  const handleListingDelete = async(listingId) => {
+    try {
+      const res = await fetch(`${apiUrl}/api/listing/delete/${listingId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': currentUser.token,
+          'id':currentUser.user._id
+        }
+      })
+      
+      const data = await res.json();
+     console.log(data)
+      if (data.status == 200) {
+
+        setUserListings((prev)=>prev.filter((listing)=>listing._id!==listingId))
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+
+
 console.log(userListings)
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -268,7 +295,9 @@ console.log(userListings)
                 <p>{listing.name}</p>
               </Link>
               <div className=" flex flex-col item-center ">
-                <button className="text-red-700 uppercase">Delete</button>
+                <button
+                  onClick={()=>handleListingDelete(listing._id)}
+                  className="text-red-700 uppercase">Delete</button>
                 <button className="text-green-700 uppercase">Edit</button>
               </div>
             </div>
