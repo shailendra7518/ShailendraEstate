@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 const apiUrl = import.meta.env.VITE_BASE_URL;
-import { Swiper, SwiperSlide } from 'swiper/react';
-import swiperCore from 'swiper';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css/bundle';
+import { Swiper, SwiperSlide } from "swiper/react";
+import swiperCore from "swiper";
+import { Navigation } from "swiper/modules";
+
+import "swiper/css/bundle";
 
 import {
   FaBath,
@@ -15,51 +16,44 @@ import {
   FaParking,
   FaShare,
 } from "react-icons/fa";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import Contact from "../Components/Contact";
 
 function Listing() {
-    swiperCore.use([Navigation]);
-    const params = useParams();
-    const [listing, setListing]
-        = useState(null)
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false)
-    
-     const [copied, setCopied] = useState(false);
-    const [contact, setContact] = useState(false);
-    
-    const {currentUser}=useSelector((state)=>state.user)
-    useEffect(() => {
-        const fetchListing = async () => {
-            try {
-                setLoading(true)
-                  const res = await fetch(
-                    `${apiUrl}/api/listing/get/${params.id}`
-                  );
+  swiperCore.use([Navigation]);
+  const params = useParams();
+  const [listing, setListing] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-                const data = await res.json();
-                console.log(data)
-                if (data.status == 200) {
-                    setLoading(false)
-                    setListing(data.listing)
-                } else {
-                    setLoading(false)
-                    setError(true)
-                }
-                // setListing(data.listing)
-            } catch (error) {
+  const [copied, setCopied] = useState(false);
+  const [contact, setContact] = useState(false);
 
-                setError(true)
-                setLoading(false)
-            }
-            
-      
+  const { currentUser } = useSelector((state) => state.user);
+  useEffect(() => {
+    const fetchListing = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${apiUrl}/api/listing/get/${params.id}`);
+
+        const data = await res.json();
+        console.log(data);
+        if (data.status == 200) {
+          setLoading(false);
+          setListing(data.listing);
+        } else {
+          setLoading(false);
+          setError(true);
         }
-        
-              fetchListing();
-},[])
+        // setListing(data.listing)
+      } catch (error) {
+        setError(true);
+        setLoading(false);
+      }
+    };
 
-    console.log(listing)
+    fetchListing();
+  }, []);
 
   return (
     <main>
@@ -154,7 +148,7 @@ function Listing() {
                 Contact landlord
               </button>
             )}
-            {/* {contact && <Contact listing={listing} />} */}
+            {contact && <Contact listing={listing} />}
           </div>
         </>
       )}
@@ -162,4 +156,4 @@ function Listing() {
   );
 }
 
-export default Listing
+export default Listing;
