@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 function Header() {
   const { currentUser } = useSelector((state) => state.user);
-  
+  const [searchTerm,setSerchTerm]=useState('')
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const urlParams = new URLSearchParams(window.location.search)
+    urlParams.set('searchTerm', searchTerm)
+    
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`)
+    
+  }
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const serchTermFromUrl = urlParams.get('searchTerm');
+
+    if (setSerchTerm(serchTermFromUrl));
+
+},[location.search])
+
   return (
     <header className="bg-slate-200 shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
@@ -13,16 +32,20 @@ function Header() {
           <span className="text-slate-700">Estate</span>
         </h1>
         <form
-          action=""
+          onSubmit={handleSubmit}
           className="bg-slate-100 p-3 rounded-lg flex items-center"
         >
           <input
+            value={searchTerm}
+            onChange={(e) => setSerchTerm(e.target.value)}
             type="text"
             placeholder="
               Search..."
             className="bg-transparent focus:outline-none w-24 sm:w-64"
           />
-          <FaSearch className="text-slate-600" />
+          <button>
+            <FaSearch className="text-slate-600" />
+          </button>
         </form>
         <ul className="flex gap-4">
           <Link to="/">
@@ -40,7 +63,8 @@ function Header() {
               <img
                 src={currentUser.user.avatar}
                 className="rounded-full h-7 w-7 object-cover"
-                alt="profile" />
+                alt="profile"
+              />
             ) : (
               <li className=" text-slate-700 hover:underline">Sign In</li>
             )}
