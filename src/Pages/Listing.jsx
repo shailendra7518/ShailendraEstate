@@ -61,11 +61,8 @@ function Listing() {
                   }}
                 ></div>
               </SwiperSlide>
-            ))}
-                  </Swiper>
-                  
-
-                  
+          </Swiper>
+                  </Swiper
         </>
       )}
     </main>
