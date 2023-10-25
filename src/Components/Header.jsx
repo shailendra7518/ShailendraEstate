@@ -9,28 +9,36 @@ function Header() {
   const handleSubmit = (e) => {
     e.preventDefault()
     const urlParams = new URLSearchParams(window.location.search)
-    urlParams.set('searchTerm', searchTerm)
+    urlParams.set('searchTerm', searchTerm) 
     
     const searchQuery = urlParams.toString();
+    
     navigate(`/search?${searchQuery}`)
     
   }
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
-    const serchTermFromUrl = urlParams.get('searchTerm');
-
-    if (setSerchTerm(serchTermFromUrl));
+    const searchTermFromUrl = urlParams.get('searchTerm');
+    
+    if (searchTermFromUrl === null) {
+      setSerchTerm('')
+    } else {
+      setSerchTerm(searchTermFromUrl)
+    }
+   
 
 },[location.search])
 
   return (
     <header className="bg-slate-200 shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
-        <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
-          <span className="text-slate-500">Shailendra </span>
-          <span className="text-slate-700">Estate</span>
-        </h1>
+        <Link to={"/"}>
+          <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
+            <span className="text-slate-500">Shailendra </span>
+            <span className="text-slate-700">Estate</span>
+          </h1>
+        </Link>
         <form
           onSubmit={handleSubmit}
           className="bg-slate-100 p-3 rounded-lg flex items-center"

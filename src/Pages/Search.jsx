@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ListingItem from "./ListingItem";
 const apiUrl = import.meta.env.VITE_BASE_URL;
 function Search() {
-    const navigate= useNavigate()
+  const navigate = useNavigate()
+  const [showMore, setShowMore] = useState(false);
     const [sidebardata, setSidebardata] = useState({
         searchTerm: '',
         type: 'all',
@@ -48,7 +50,10 @@ function Search() {
                 const searchQuery = urlParams.toString();
                 const res= await fetch(`${apiUrl}/api/listing/get?${searchQuery}`)
                 
-                const data = await res.json();
+              const data = await res.json();
+              if (data.listings.length > 8) {
+                setShowMore(true)
+              }
 //   console.log(data)
                 setListings(data.listings);
                 setLoading(false)
@@ -104,8 +109,29 @@ function Search() {
 
     }
 
+  
+  const onShowMoreClick = async() => {
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('startIndex', startIndex)
+    
+      const searchQuery = urlParams.toString();
+    const res = await fetch(`${apiUrl}/api/listing/get?${searchQuery}`);
+    const data = await res.json();
 
+    if (data.listings.length <9) {
+      setShowMore(false)
 
+    }
+
+    setListings([...listings,...data.listings])
+  }
+
+  
+  
+console.log("sidebardata",sidebardata)
+    
   return (
     <div className="flex flex-col md:flex-row">
       {/* left div */}
@@ -195,33 +221,60 @@ function Search() {
               />
               <span>Furnished</span>
             </div>
-            <div className="flex items-center gap-2">
-              <label className="font-semibold">Sort:</label>
-              <select
-                name=""
-                id="sort_order"
-                onChange={handleChange}
-                defaultValue={"created_at_desc"}
-                className="border rounded-lg p-3"
-              >
-                <option value="regularPrice_desc">Price high to low</option>
-
-                <option value="regularPrice_asc">Price low to high</option>
-                <option value="createdAt_desc">Latest</option>
-                <option value="createdAt_asc">Oldest</option>
-              </select>
-            </div>
-            <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95">
-              Search
-            </button>
           </div>
+          <div className="flex items-center gap-2">
+            <label className="font-semibold">Sort:</label>
+            <select
+              name=""
+              id="sort_order"
+              onChange={handleChange}
+              defaultValue={"created_at_desc"}
+              className="border rounded-lg p-3"
+            >
+              <option value="regularPrice_desc">Price high to low</option>
+
+              <option value="regularPrice_asc">Price low to high</option>
+              <option value="createdAt_desc">Latest</option>
+              <option value="createdAt_asc">Oldest</option>
+            </select>
+          </div>
+          <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95">
+            Search
+          </button>
         </form>
       </div>
       {/* right div */}
-      <div className="">
+      <div className="felx-1">
         <h1 className="text-3xl font-semibold border-b p-3 text-slate-700 mt-5">
           Listing results:
         </h1>
+
+        <div className="p-7 flex flex-wrap gap-4">
+          {!loading && listings.length === 0 && (
+            <p className="text-xl text-slate-700">No listing found!</p>
+          )}
+
+          {loading && (
+            <p className="text-xl text-slate-700 text-center w-full">
+              Loading...
+            </p>
+          )}
+
+          {!loading &&
+            listings &&
+            listings.map((listing) => (
+              <ListingItem key={listing._id} listing={listing} />
+            ))}
+
+          {showMore && (
+            <button
+              onClick={() => onShowMoreClick()}
+              className="text-green-700 hover:underline p-7 text-center w-full"
+            >
+              Show more
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
