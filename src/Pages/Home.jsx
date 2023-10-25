@@ -82,10 +82,9 @@ console.log(saleListings,offerListings,rentListings)
         {offerListings &&
           offerListings.length > 0 &&
           offerListings.map((listing) => (
-            <SwiperSlide>
+            <SwiperSlide key={listing._id}>
               <div
                 className="h-[500px]"
-                key={listing._id}
                 style={{
                   background: `url(${listing.imageUrls[0]}) center no-repeat`,
                   backgroundSize: "cover",

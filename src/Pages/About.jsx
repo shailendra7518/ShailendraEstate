@@ -2,7 +2,7 @@ import React from 'react'
 
 function About() {
   return (
-    <div className="py-20 px-4 max-w-6xl mx-auto">
+    <div className="py-20 px-4 max-w-6xl mx-auto min-h-screen">
       <h1 className="text-3xl font-bold mb-4 text-slate-800">
         About Shailendra Estate
       </h1>
