@@ -274,7 +274,7 @@ function CreateListing() {
                 type="number"
                 id="regularPrice"
                 min="1"
-                max="10"
+              
                 required
               />
               <div className="flex flex-col item-center">
@@ -291,7 +291,7 @@ function CreateListing() {
                   type="number"
                   id="discountPrice"
                   min="1"
-                  max="10"
+                
                   required
                 />
                 <div className="flex flex-col item-center">

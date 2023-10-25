@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ListingItem from "./ListingItem";
 const apiUrl = import.meta.env.VITE_BASE_URL;
 function Search() {
     const navigate= useNavigate()
@@ -104,7 +105,7 @@ function Search() {
 
     }
 
-
+console.log("sidebardata",sidebardata)
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -218,10 +219,23 @@ function Search() {
         </form>
       </div>
       {/* right div */}
-      <div className="">
+      <div className="felx-1">
         <h1 className="text-3xl font-semibold border-b p-3 text-slate-700 mt-5">
           Listing results:
         </h1>
+
+        <div className="p-7 flex flex-wrap gap-4">
+          {!loading && listings.length === 0 && (<p className="text-xl text-slate-700">No listing found!</p>)}
+          
+          {loading && (<p className="text-xl text-slate-700 text-center w-full">Loading...</p>)}
+
+          {!loading && listings && listings.map((listing) => (
+            <ListingItem key={listing._id}
+            listing={listing}/>
+        
+
+          ))}
+        </div>
       </div>
     </div>
   );
