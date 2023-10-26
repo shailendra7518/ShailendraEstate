@@ -25,7 +25,6 @@ function App() {
         <Route path="/search" element={<Search />} />
 
         <Route path="/listing/:id" element={<Listing />} />
-        <Route path="*" element={<Home />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-listing" element={<CreateListing />} />
