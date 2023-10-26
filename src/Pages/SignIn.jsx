@@ -42,7 +42,12 @@ function SignIn() {
       // check if status code 201 then its successfully loged in
       if (data.status == 201) {
         dispatch(signInSuccess(data));
-        Navigate("/");
+
+        setTimeout(() => {
+           Navigate("/");
+        })
+
+       
       } else {
         dispatch(signInFailure(data));
       }
