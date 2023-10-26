@@ -2,21 +2,24 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 const apiUrl = import.meta.env.VITE_BASE_URL;
 import { Link, useNavigate } from "react-router-dom";
-import {signInStart,signInSuccess,signInFailure} from '../Redux/User/userSlice'
-import OAuth from "../Components/oauth";
-
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../Redux/User/userSlice";
+import GoogleAuth from "../Components/GoogleAuth";
 
 function SignIn() {
   const [formData, setformData] = useState({});
-   const {loading, error}=useSelector((state)=>state.user)
+  const { loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
   const handleChange = (e) => {
     setformData({ ...formData, [e.target.id]: e.target.value });
   };
-  console.log(formData)
-  
-  console.log(error)
+  console.log(formData);
+
+  console.log(error);
   const handleSubmit = async (e) => {
     // prevent default feature
     e.preventDefault();
@@ -24,7 +27,7 @@ function SignIn() {
       // setLoading(true);
       // dispatch signin start function
       dispatch(signInStart());
-     // call the api endpoint
+      // call the api endpoint
       const res = await fetch(`${apiUrl}/api/auth/signin`, {
         method: "POST",
         headers: {
@@ -32,21 +35,21 @@ function SignIn() {
         },
         body: JSON.stringify(formData),
       });
-       
+
       const data = await res.json();
-       console.log(data)
-   
+      console.log(data);
+
       // check if status code 201 then its successfully loged in
       if (data.status == 201) {
-         dispatch(signInSuccess(data))
+        dispatch(signInSuccess(data));
         Navigate("/");
       } else {
-        dispatch(signInFailure(data))
+        dispatch(signInFailure(data));
       }
 
       // console.log(data);
     } catch (err) {
-      dispatch(signInFailure(err))
+      dispatch(signInFailure(err));
     }
   };
 
@@ -75,8 +78,7 @@ function SignIn() {
           {loading ? "Loading..." : "Sign In"}
         </button>
 
-       <OAuth/>
-
+        <GoogleAuth />
       </form>
       <div className="flex gap-2 mt-5">
         {" "}

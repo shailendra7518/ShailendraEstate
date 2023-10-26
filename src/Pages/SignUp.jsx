@@ -2,7 +2,7 @@
 import { useState } from "react";
  const apiUrl = import.meta.env.VITE_BASE_URL;
 import { Link, useNavigate } from "react-router-dom";
-import OAuth from "../Components/oauth";
+import GoogleAuth from "../Components/GoogleAuth";
  
 function SignUp() {
  
@@ -79,7 +79,7 @@ function SignUp() {
         >
           {loading ? "Loading..." : "Sign Up"}
         </button>
-        <OAuth />
+        <GoogleAuth />
       </form>
       <div className="flex gap-2 mt-5">
         {" "}

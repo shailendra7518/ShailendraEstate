@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../Redux/User/userSlice';
 import { useNavigate } from 'react-router-dom';
 const apiUrl = import.meta.env.VITE_BASE_URL;
-function OAuth() {
+function GoogleAuth() {
     const Navigate = useNavigate();
     const dispatch = useDispatch();
     const handleGoogleClick = async () => {
@@ -35,4 +35,4 @@ function OAuth() {
   )
 }
 
-export default OAuth
+export default GoogleAuth
